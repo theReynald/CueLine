@@ -3,6 +3,14 @@
 A simple iOS/Android teleprompter built with Expo (Expo Go compatible). Loads
 script text directly from a Google Doc you paste in.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="CueLine home screen — paste a Google Docs URL, adjust font size, scroll speed, and mirror text" width="240" />
+  <img src="docs/screenshots/loaded.png" alt="CueLine with a Google Docs URL loaded and ready to start" width="240" />
+  <img src="docs/screenshots/teleprompter.png" alt="CueLine teleprompter scrolling a script with play, font, and live controls" width="240" />
+</p>
+
 ## How Google Docs loading works
 
 The app fetches the doc's plain‑text export from
