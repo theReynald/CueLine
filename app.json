@@ -5,16 +5,34 @@
     "version": "1.0.0",
     "orientation": "default",
     "userInterfaceStyle": "dark",
+    "icon": "./assets/icon.png",
     "splash": {
-      "backgroundColor": "#000000"
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f0a23"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cueline.app"
+      "bundleIdentifier": "com.reynaldadolphe.cueline",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "com.cueline.app"
+      "package": "com.reynaldadolphe.cueline",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#0f0a23"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "47075471-c2e3-4c0f-bf01-dab64ee4137c"
+      }
     }
   }
 }
