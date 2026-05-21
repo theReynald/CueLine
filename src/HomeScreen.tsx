@@ -103,19 +103,32 @@ export default function HomeScreen({ navigation }: Props) {
 
           <View style={styles.card}>
             <Text style={styles.label}>Google Docs URL</Text>
-            <TextInput
-              accessibilityLabel="Google Docs URL"
-              style={styles.input}
-              value={url}
-              onChangeText={setUrl}
-              placeholder="https://docs.google.com/document/d/..."
-              placeholderTextColor={colors.textMuted}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="url"
-              returnKeyType="go"
-              onSubmitEditing={() => handleStart(false)}
-            />
+            <View style={styles.inputWrap}>
+              <TextInput
+                accessibilityLabel="Google Docs URL"
+                style={[styles.input, styles.inputWithClear]}
+                value={url}
+                onChangeText={setUrl}
+                placeholder="https://docs.google.com/document/d/..."
+                placeholderTextColor={colors.textMuted}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="url"
+                returnKeyType="go"
+                onSubmitEditing={() => handleStart(false)}
+              />
+              {url.length > 0 && (
+                <Pressable
+                  onPress={() => setUrl("")}
+                  style={styles.clearBtn}
+                  accessibilityRole="button"
+                  accessibilityLabel="Clear URL"
+                  hitSlop={8}
+                >
+                  <Text style={styles.clearBtnText}>✕</Text>
+                </Pressable>
+              )}
+            </View>
           </View>
 
           <View style={styles.card}>
@@ -312,6 +325,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderWidth: 1,
     borderColor: colors.borderStrong,
+  },
+  inputWrap: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  inputWithClear: {
+    paddingRight: 40,
+  },
+  clearBtn: {
+    position: "absolute",
+    right: 10,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: "rgba(255,255,255,0.15)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  clearBtnText: {
+    color: colors.text,
+    fontSize: 13,
+    fontWeight: "700",
   },
   row: {
     flexDirection: "row",
