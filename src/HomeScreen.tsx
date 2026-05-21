@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useFocusEffect } from "@react-navigation/native";
 import { fetchDocText } from "./googleDocs";
 import {
   DEFAULT_SETTINGS,
@@ -33,13 +34,15 @@ export default function HomeScreen({ navigation }: Props) {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      const s = await loadSettings();
-      setSettings(s);
-      setUrl(s.lastDocUrl);
-    })();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        const s = await loadSettings();
+        setSettings(s);
+        setUrl(s.lastDocUrl);
+      })();
+    }, [])
+  );
 
   const update = (patch: Partial<Settings>) => {
     setSettings((prev) => {
@@ -223,7 +226,8 @@ export default function HomeScreen({ navigation }: Props) {
             Tip: In Google Docs → Share → General access → “Anyone with the
             link” → Viewer.
           </Text>
-          <Text style={styles.buildVersion}>Build: {BUILD_VERSION}</Text>        </ScrollView>
+          <Text style={styles.buildVersion}>Build: {BUILD_VERSION}</Text>
+        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );

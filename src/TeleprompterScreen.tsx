@@ -303,19 +303,35 @@ export default function TeleprompterScreen({ route, navigation }: Props) {
           <View style={styles.smallRow}>
             <CtrlBtn
               label="A−"
-              onPress={() => setFontSize((f) => Math.max(16, f - 4))}
+              onPress={() => setFontSize((f) => {
+                const next = Math.max(16, f - 4);
+                loadSettings().then((s) => saveSettings({ ...s, fontSize: next }));
+                return next;
+              })}
             />
             <CtrlBtn
               label="A+"
-              onPress={() => setFontSize((f) => Math.min(140, f + 4))}
+              onPress={() => setFontSize((f) => {
+                const next = Math.min(140, f + 4);
+                loadSettings().then((s) => saveSettings({ ...s, fontSize: next }));
+                return next;
+              })}
             />
             <CtrlBtn
               label="−"
-              onPress={() => setSpeed((s) => Math.max(10, s - 10))}
+              onPress={() => setSpeed((s) => {
+                const next = Math.max(10, s - 10);
+                loadSettings().then((curr) => saveSettings({ ...curr, speed: next }));
+                return next;
+              })}
             />
             <CtrlBtn
               label="+"
-              onPress={() => setSpeed((s) => Math.min(400, s + 10))}
+              onPress={() => setSpeed((s) => {
+                const next = Math.min(400, s + 10);
+                loadSettings().then((curr) => saveSettings({ ...curr, speed: next }));
+                return next;
+              })}
             />
             <CtrlBtn label="↺" onPress={restart} />
           </View>
