@@ -47,6 +47,9 @@ export default function TeleprompterScreen({ route, navigation }: Props) {
   const textRef = useRef(initialText);
   textRef.current = text;
 
+  const isDraggingRef = useRef(false);
+  const wasPlayingRef = useRef(false);
+
   const LIVE_POLL_MS = 5000;
 
   // Animation loop driven by requestAnimationFrame.
@@ -195,12 +198,7 @@ export default function TeleprompterScreen({ route, navigation }: Props) {
 
   return (
     <View style={styles.root}>
-      <Pressable
-        style={styles.tapZone}
-        onPress={() => setShowControls((v) => !v)}
-        accessibilityRole="button"
-        accessibilityLabel="Toggle teleprompter controls"
-      >
+      <View style={styles.tapZone}>
         <ScrollView
           ref={scrollRef}
           style={[styles.scroll, mirror && styles.mirror]}
@@ -216,6 +214,28 @@ export default function TeleprompterScreen({ route, navigation }: Props) {
           onContentSizeChange={(_w, h) => {
             contentHeightRef.current = h;
           }}
+          onScrollBeginDrag={() => {
+            isDraggingRef.current = true;
+            wasPlayingRef.current = playing;
+            if (playing) {
+              setPlaying(false);
+            }
+          }}
+          onScrollEndDrag={() => {
+            // Keep isDragging true briefly so onTouchEnd doesn't toggle controls
+            setTimeout(() => { isDraggingRef.current = false; }, 100);
+          }}
+          onMomentumScrollEnd={() => {
+            if (wasPlayingRef.current) {
+              setPlaying(true);
+              wasPlayingRef.current = false;
+            }
+          }}
+          onTouchEnd={() => {
+            if (!isDraggingRef.current) {
+              setShowControls((v) => !v);
+            }
+          }}
         >
           <Text
             style={[
@@ -230,7 +250,7 @@ export default function TeleprompterScreen({ route, navigation }: Props) {
 
         {/* Reading indicator line */}
         <View pointerEvents="none" style={styles.readerLine} />
-      </Pressable>
+      </View>
 
       {showControls && (
         <LinearGradient

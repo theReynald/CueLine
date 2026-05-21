@@ -24,6 +24,8 @@ import {
 import type { RootStackParamList } from "./navigation";
 import { colors, gradients } from "./theme";
 
+const BUILD_VERSION = new Date().toLocaleString();
+
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 export default function HomeScreen({ navigation }: Props) {
@@ -221,7 +223,7 @@ export default function HomeScreen({ navigation }: Props) {
             Tip: In Google Docs → Share → General access → “Anyone with the
             link” → Viewer.
           </Text>
-        </ScrollView>
+          <Text style={styles.buildVersion}>Build: {BUILD_VERSION}</Text>        </ScrollView>
       </KeyboardAvoidingView>
     </LinearGradient>
   );
@@ -370,5 +372,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
     lineHeight: 17,
+  },
+  buildVersion: {
+    color: "#ffffff",
+    fontSize: 11,
+    textAlign: "center",
+    marginTop: 8,
   },
 });
